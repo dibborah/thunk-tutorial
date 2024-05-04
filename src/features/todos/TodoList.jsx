@@ -15,12 +15,14 @@ const TodoList = () => {
   useEffect(() => {
     dispatch(fetchTodos());
   }, []);
+
   if (isLoading) {
     return <h1>Loading ...</h1>;
   }
   if (error) {
     return <h1>{error.message}</h1>;
   }
+
   return (
     <div>
       {todos &&

@@ -1,8 +1,15 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "./todoSlice";
 
 const TodoForm = () => {
   const [title, setTitle] = useState("");
-  const handleSubmit = () => {};
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(addTodo(title));
+    setTitle("");
+  };
   return (
     <form onSubmit={handleSubmit}>
       <input

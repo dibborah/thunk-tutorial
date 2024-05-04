@@ -6,6 +6,14 @@ export const fetchTodos = createAsyncThunk("todos/fetch", async () => {
   //   console.log(response.data);
   return response.data;
 });
+export const addTodo = createAsyncThunk("add/fetch", async (title) => {
+  const response = await axios.post("http://localhost:8001/todos", {
+    title: title,
+    completed: false,
+  });
+  console.log(response.data);
+  return response.data;
+});
 
 const todoSlice = createSlice({
   name: "todos",
@@ -25,6 +33,22 @@ const todoSlice = createSlice({
       state.isLoading = false;
     });
     builders.addCase(fetchTodos.rejected, (state, action) => {
+      //   console.log("rejected");
+      state.error = action.error;
+      // console.log(action.error);
+      state.isLoading = false;
+      state.error = state.error;
+    });
+    builders.addCase(addTodo.pending, (state, action) => {
+      //   console.log("Pending");
+      state.isLoading = true;
+    });
+    builders.addCase(addTodo.fulfilled, (state, action) => {
+      //   console.log("Fulfilled");
+      state.data.push(action.payload);
+      state.isLoading = false;
+    });
+    builders.addCase(addTodo.rejected, (state, action) => {
       //   console.log("rejected");
       state.error = action.error;
       // console.log(action.error);
