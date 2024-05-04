@@ -4,19 +4,32 @@ import { addTodo } from "./todoSlice";
 
 const TodoForm = () => {
   const [title, setTitle] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const dispatch = useDispatch();
-  const {isLoadingAddTodo} = useSelector((state) => {
-    return state.todos
-  })
   const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
-    dispatch(addTodo(title));
+    dispatch(addTodo(title))
+    .unwrap()
+    .catch((error) => {
+      setError(error);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    });
     setTitle("");
   };
 
-  if(isLoadingAddTodo) {
-    return <h1>Loading ...</h1>
+  if (isLoading) {
+    return <h1>Loading ...</h1>;
   }
+
+  if (error) {
+    return <h1>{error.message}</h1>;
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <input

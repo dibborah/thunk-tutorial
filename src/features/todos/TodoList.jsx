@@ -1,24 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchTodos } from "./todoSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const TodoList = () => {
-  const {
-    isLoadingFetchTodo,
-    data: todos,
-    error,
-  } = useSelector((state) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { data: todos } = useSelector((state) => {
     return state.todos;
   });
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchTodos());
+    setIsLoading(true);
+    dispatch(fetchTodos())
+      .unwrap()
+      .catch((error) => {
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
-  if (isLoadingFetchTodo) {
+  if (isLoading) {
     return <h1>Loading ...</h1>;
   }
+
   if (error) {
     return <h1>{error.message}</h1>;
   }
