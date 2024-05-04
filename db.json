@@ -1,83 +1,18 @@
 {
   "todos": [
     {
-      "id": "1",
-      "title": "react Js",
-      "completed": true
-    },
-    {
-      "id": "2",
-      "title": "react native",
+      "id": "70a5",
+      "title": "native",
       "completed": false
     },
     {
-      "id": "b995",
+      "id": "f2b6",
       "title": "css",
       "completed": false
     },
     {
-      "id": "d427",
-      "title": "javascript",
-      "completed": false
-    },
-    {
-      "id": "a338",
-      "title": "DSA",
-      "completed": false
-    },
-    {
-      "id": "0dd8",
-      "title": "system design",
-      "completed": false
-    },
-    {
-      "id": "cbfa",
-      "title": "Adv. DSA",
-      "completed": false
-    },
-    {
-      "id": "4332",
-      "title": "Express Js",
-      "completed": false
-    },
-    {
-      "id": "46d0",
-      "title": "BE system design",
-      "completed": false
-    },
-    {
-      "id": "ab1a",
-      "title": "remix ",
-      "completed": false
-    },
-    {
-      "id": "94a7",
-      "title": "CSS & JS",
-      "completed": false
-    },
-    {
-      "id": "e231",
-      "title": "redux and @reduxjs/toolkit",
-      "completed": false
-    },
-    {
-      "id": "2f61",
-      "title": "Next js",
-      "completed": false
-    },
-    {
-      "id": "a850",
-      "title": "hhh",
-      "completed": false
-    },
-    {
-      "id": "3d9f",
-      "title": "React by Dan Abramov",
-      "completed": false
-    },
-    {
-      "id": "9cd5",
-      "title": "React by Andrew Clark",
+      "id": "1a35",
+      "title": " js",
       "completed": false
     }
   ]

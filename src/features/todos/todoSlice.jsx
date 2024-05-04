@@ -4,20 +4,39 @@ import axios from "axios";
 export const fetchTodos = createAsyncThunk("todos/fetch", async () => {
   const response = await axios.get("http://localhost:8001/todos");
   //   console.log(response.data);
-  await pause(1500);
+  //   await pause(1500);
   return response.data;
-});
+}); // get
 
-export const addTodo = createAsyncThunk("add/fetch", async (title) => {
-  const response = await axios.post("http://localhost:8001/todosTTT", {
+export const addTodo = createAsyncThunk("todos/add", async (title) => {
+  const response = await axios.post("http://localhost:8001/todos", {
     title: title,
     completed: false,
   });
-  await pause(2000);
-  //   await pause(1500);// resolve => execution of this line of code is completed
+  //   await pause(1500); // resolve => execution of this line of code is completed
   //   console.log(response.data);
   return response.data;
-});
+}); // post
+
+export const deleteTodo = createAsyncThunk("todos/delete", async (id) => {
+  const resonse = await axios.delete(`http://localhost:8001/todos/${id}`);
+  //   await pause(1500); // resolve => execution of this line of code is completed
+  //   console.log(response);
+  return id;
+}); // delete
+export const toggleTodo = createAsyncThunk(
+  "todos/toggle",
+  async ({ id, completed }) => {
+    const response = await axios.patch(`http://localhost:8001/todos/${id}`, {
+      completed: !completed,
+    });
+    //   await pause(1500); // resolve => execution of this line of code is completed
+    console.log(response.data);
+    return response.data;
+  }
+); // patch
+
+// put// entire resource
 
 const pause = (duration) => {
   return new Promise((resolve) => {
@@ -41,6 +60,7 @@ const todoSlice = createSlice({
     builders.addCase(fetchTodos.rejected, (state, action) => {
       //   console.log("rejected");
     });
+
     builders.addCase(addTodo.pending, (state, action) => {
       //   console.log("Pending");
     });
@@ -49,6 +69,39 @@ const todoSlice = createSlice({
       state.data.push(action.payload);
     });
     builders.addCase(addTodo.rejected, (state, action) => {
+      //   console.log("rejected");
+    });
+
+    builders.addCase(deleteTodo.pending, (state, action) => {
+      //   console.log("Pending");
+    });
+    builders.addCase(deleteTodo.fulfilled, (state, action) => {
+      //   console.log("Fulfilled");
+      //   console.log("action from deleteTodo", action);
+      state.data = state.data.filter((todo) => todo.id !== action.payload);
+    });
+    builders.addCase(deleteTodo.rejected, (state, action) => {
+      //   console.log("rejected");
+    });
+
+    builders.addCase(toggleTodo.pending, (state, action) => {
+      //   console.log("Pending");
+    });
+    builders.addCase(toggleTodo.fulfilled, (state, action) => {
+      //   console.log("Fulfilled");
+      //   state.data = state.data.map((todo) => {
+      //     if (todo.id === action.payload) {
+      //       return { ...todo, completed: !todo.completed };
+      //     }
+      //     return todo;
+      //   });
+      state.data.forEach((todo) => {// cannot initialise or set state.data here
+        if (todo.id === action.payload.id) {
+          todo.completed = action.payload.completed;
+        }
+      });
+    });
+    builders.addCase(toggleTodo.rejected, (state, action) => {
       //   console.log("rejected");
     });
   },

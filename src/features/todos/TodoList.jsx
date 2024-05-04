@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchTodos } from "./todoSlice";
 import { useDispatch, useSelector } from "react-redux";
+import SingleTodo from "./SingleTodo";
 
 const TodoList = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +35,8 @@ const TodoList = () => {
     <div>
       {todos &&
         todos.map((todo) => {
-          return <div key={todo.id}>{todo.title}</div>;
+        //   return <div key={todo.id}>{todo.title}</div>;
+          return <SingleTodo key={todo.id} todo={todo}/>
         })}
     </div>
   );
