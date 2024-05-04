@@ -9,21 +9,22 @@ export const fetchTodos = createAsyncThunk("todos/fetch", async () => {
 });
 
 export const addTodo = createAsyncThunk("add/fetch", async (title) => {
-  const response = await axios.post("http://localhost:8001/todos", {
+  const response = await axios.post("http://localhost:8001/todosTTT", {
     title: title,
     completed: false,
   });
-  await pause(1500);// resolve => execution of this line of code is completed
+  await pause(2000);
+  //   await pause(1500);// resolve => execution of this line of code is completed
   //   console.log(response.data);
   return response.data;
 });
 
-
 const pause = (duration) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, duration)
-    })
-}
+  return new Promise((resolve) => {
+    setTimeout(resolve, duration);
+  });
+};
+
 const todoSlice = createSlice({
   name: "todos",
   initialState: {

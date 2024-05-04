@@ -9,29 +9,26 @@ const TodoForm = () => {
 
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
-    setIsLoading(true);
     e.preventDefault();
+    setIsLoading(true);
     dispatch(addTodo(title))
-    .unwrap()
-    .catch((error) => {
-      setError(error);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
-    setTitle("");
+      .unwrap()
+      .then(() => {
+        setTitle("");
+      })
+      .catch((error) => {
+        // new Error (setError(<p>Error exists</p>));
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
-
-  if (isLoading) {
-    return <h1>Loading ...</h1>;
-  }
-
-  if (error) {
-    return <h1>{error.message}</h1>;
-  }
 
   return (
     <form onSubmit={handleSubmit}>
+      <div>{error && <p style={{ color: "red" }}>{error.message}</p>}</div>
+
       <input
         type="text"
         id="title"
@@ -39,7 +36,9 @@ const TodoForm = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <button type="submit">Add Todo</button>
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? "Adding" : "Add Todo"}
+      </button>
     </form>
   );
 };
