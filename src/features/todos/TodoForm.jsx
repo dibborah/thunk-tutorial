@@ -1,15 +1,22 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "./todoSlice";
 
 const TodoForm = () => {
   const [title, setTitle] = useState("");
   const dispatch = useDispatch();
+  const {isLoadingAddTodo} = useSelector((state) => {
+    return state.todos
+  })
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addTodo(title));
     setTitle("");
   };
+
+  if(isLoadingAddTodo) {
+    return <h1>Loading ...</h1>
+  }
   return (
     <form onSubmit={handleSubmit}>
       <input

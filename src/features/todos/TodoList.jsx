@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const TodoList = () => {
   const {
-    isLoading,
+    isLoadingFetchTodo,
     data: todos,
     error,
   } = useSelector((state) => {
@@ -16,7 +16,7 @@ const TodoList = () => {
     dispatch(fetchTodos());
   }, []);
 
-  if (isLoading) {
+  if (isLoadingFetchTodo) {
     return <h1>Loading ...</h1>;
   }
   if (error) {
